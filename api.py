@@ -1,12 +1,16 @@
+api.py
+
 from fastapi import FastAPI, HTTPException
-import pickle
+import joblib
 import pandas as pd
+from config import MODEL_PATH
 from pydantic import BaseModel
 
 # Load the trained model
-MODEL_PATH = "best_rf_model.pkl"
-with open(MODEL_PATH, "rb") as f:
-    model = pickle.load(f)
+try:
+    model = joblib.load(MODEL_PATH)
+except FileNotFoundError:
+    raise RuntimeError("Model file not found! Ensure model training is completed before running the API.")
 
 # Initialize FastAPI app
 app = FastAPI()

@@ -12,17 +12,17 @@ os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(MODEL_DIR, exist_ok=True)
 
 # Model and data file paths
-MODEL_PATH = os.path.join(MODEL_DIR, "best_rf_model.pkl")
-RAW_DATA_PATH = os.path.join(DATA_DIR, "raw_data.arff")  # Updated path for consistency
-PROCESSED_DATA_PATH = os.path.join(DATA_DIR, "processed_data.csv")  # Ensure processed data is correctly referenced
+MODEL_PATH = os.path.join(MODEL_DIR, "random_forest_model.pkl")  # Updated model name
+RAW_DATA_PATH = os.path.join(DATA_DIR, "poland.csv")  # Updated dataset name
+PROCESSED_DATA_PATH = os.path.join(DATA_DIR, "processed_data.csv")
 
 # Hyperparameter settings for GridSearchCV
 PARAM_GRID = {
-    "n_estimators": [150, 200, 250],  # Removed "rf__" prefix since it's a direct model
-    "max_depth": [10, 15, 20],
-    "min_samples_split": [2, 5],
-    "min_samples_leaf": [1, 2],
-    "class_weight": ["balanced"]
+    "rf__n_estimators": [150, 200, 250],  
+    "rf__max_depth": [10, 15, 20],        
+    "rf__min_samples_split": [2, 5],      
+    "rf__min_samples_leaf": [1, 2],       
+    "rf__class_weight": ["balanced"]
 }
 
 # FastAPI settings

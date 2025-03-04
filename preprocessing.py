@@ -1,18 +1,14 @@
 import pandas as pd
 import numpy as np
-from scipy.io import arff
 from sklearn.model_selection import train_test_split
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.over_sampling import RandomOverSampler
 import os
-from config import RAW_DATA_PATH, PROCESSED_DATA_PATH  # Corrected import
+from config import RAW_DATA_PATH, PROCESSED_DATA_PATH
 
 def load_data():
-    """Load ARFF file and convert to pandas DataFrame."""
-    data = arff.loadarff(RAW_DATA_PATH)
-    df = pd.DataFrame(data[0])
-    df['bankrupt'] = df['class'].str.decode('utf-8').astype(int).astype(bool)
-    df.drop(columns=['class'], inplace=True)
+    """Load CSV file and convert to pandas DataFrame."""
+    df = pd.read_csv(RAW_DATA_PATH)
     return df
 
 def preprocess_data(df):
@@ -42,5 +38,6 @@ def save_data(df):
 if __name__ == "__main__":
     df = load_data()
     df = preprocess_data(df)
-    save_data(df)
+    X_train, X_test, y_train, y_test = split_data(df)
+    save_data(pd.concat([X_train, y_train], axis=1))
     print("Data preprocessing complete and saved!")
